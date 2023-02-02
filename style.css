@@ -11,3 +11,19 @@
     height: 20px;
     background-color: cyan;
 }
+.user{
+    position: absolute;
+    width:100px;
+    height: 20px;
+    background-color: purple;
+}
+.ball{
+    position:absolute;
+    width:25px;
+    height: 25px;
+    border-radius: 25px ;
+    background-color:brown;
+}
+#g-over{
+    color:red;
+}
