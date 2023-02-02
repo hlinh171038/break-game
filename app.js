@@ -10,6 +10,7 @@ const currentUserPosition = userStart;
 const ballStart = [200, 40]
 let ballCurrentPosition = ballStart;
 let timeId;
+let score = 0;
 let ballDiameter = 25;
 let xDirection = 2;
 let yDirection = 2;
@@ -107,6 +108,33 @@ timeId = setInterval(moveBall,30);
 
 // check collision
 function checkCollision(){
+    //check ball block
+    for(let i=0; i<blocks.length;i++){
+        if( (ballCurrentPosition[0] > blocks[i].bottomLeft[0] && ballCurrentPosition[0] < blocks[i].bottomRight[0]) &&
+        ((ballCurrentPosition[1] + ballDiameter) > blocks[i].bottomLeft[1] && ballCurrentPosition[1] < blocks[i].topLeft[1]) ){
+            const allBlocks = Array.from(document.querySelectorAll('.block'));
+            // console.log(allBlocks);
+            allBlocks[i].classList.remove('block');
+            blocks.splice(i,1);
+            changeDirection();
+            score++;
+            scoreDisplay.innerHTML = score
+            // you win
+            if(allBlocks.length === 0){
+                scoreDisplay.innerHTML = '<h2 id="g-win">You win</h2>';
+            }
+        }
+
+    }
+    //check user collision
+    if(
+        (ballCurrentPosition[0] > currentUserPosition[0] && ballCurrentPosition[0] < currentUserPosition[0]+ blockWidth)
+        &&
+        (ballCurrentPosition[1]>currentUserPosition[1] && ballCurrentPosition[1] < currentUserPosition[1] + blockHeight)
+    ){
+        changeDirection();
+    }
+    //check ball wall
     if(
         ballCurrentPosition[0] >= (boardWidth - ballDiameter) 
         || ballCurrentPosition[0]<=0 ||
